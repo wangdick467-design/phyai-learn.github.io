@@ -26,6 +26,12 @@ pip install -r vit_jax/requirements.txt
 # 验证 JAX 是否安装成功（应显示 GPU 信息）
 # If using GPU:
 pip install -r vit_jax/requirements.txt 
+清除无效的 Git 代理配置
+在终端直接运行以下两行命令，强制取消 Git 的全局代理设置：
+
+Bash
+git config --global --unset http.proxy
+git config --global --unset https.proxy
 
 python -c "import jax; print(jax.devices())"
 # 创建模型存放目录
