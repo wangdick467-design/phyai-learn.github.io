@@ -8,9 +8,17 @@
 传统的 CNN 依赖卷积核的局部感受野，而 ViT 完全抛弃了卷积操作，直接将图像分块（Patches）并转化为序列，送入标准的 Transformer Encoder。
 
 其核心步骤可以概括为：
-1. **图像分块 (Patch Embedding)**：将输入图像 $X \in \mathbb{R}^{H \times W \times C}$ 均匀切分成不重叠的图像块 $X_p \in \mathbb{R}^{N \times (P^2 \cdot C)}$，其中 $(P, P)$ 是每个 Patch 的分辨率，$N = HW/P^2$ 是 Patch 的总个数（即序列长度）。
-2. **线性映射与位置编码**：将每个 Patch 展平并通过线性层映射到维度 $D$，同时加入可学习的**位置编码 (Positional Embedding)** 以保留空间信息。
-3. **引入 Class Token**：参考 BERT，在输入序列最前方拼接一个可学习的 `[CLS]` token，其最终的输出状态将用于图像分类。
+### 1. 图像分块 (Patch Embedding)
+将输入图像 $X \in \mathbb{R}^{H \times W \times C}$ 均匀切分成不重叠的图像块 $X_p \in \mathbb{R}^{N \times (P^2 \cdot C)}$。
+
+其中 $(P,P)$ 是每个 Patch 的分辨率，而 Patch 的总个数（即序列长度）$N$ 的计算公式为：
+$$N = \frac{H \cdot W}{P^2}$$
+
+### 2. 线性映射与位置编码
+将每个 Patch 展平并通过线性层映射到维度 $D$，同时加入可学习的**位置编码 (Positional Embedding)** 以保留空间信息。
+
+### 3. 引入 Class Token
+参考 BERT，在输入序列最前方拼接一个可学习的 `[CLS]` token，其最终的输出状态将用于图像分类。
 
 ---
 
@@ -18,21 +26,25 @@
 
 ViT 内部的前向传播公式如下：
 
-1. **输入序列初始化**（拼接 Class Token 并嵌入位置信息）：
-   $$z_0 = [x_{\text{class}}; \, x_p^1 E; \, x_p^2 E; \, \dots; \, x_p^N E] + E_{\text{pos}}$$
-   其中 $E \in \mathbb{R}^{(P^2 \cdot C) \times D}$ 是线性映射层，$E_{\text{pos}} \in \mathbb{R}^{(N+1) \times D}$ 是位置编码。
+### 阶梯一：输入序列初始化
+（拼接 Class Token 并嵌入位置信息）
+$$z_0 = [x_{\text{class}}; \, x_p^1 E; \, x_p^2 E; \, \dots; \, x_p^N E] + E_{\text{pos}}$$
 
-2. **Transformer Encoder 堆叠循环**（对于层数 $l = 1, \dots, L$）：
-   $$z_l' = \text{MSA}(\text{LN}(z_{l-1})) + z_{l-1}$$
-   $$z_l = \text{MLP}(\text{LN}(z_l')) + z_l'$$
-   *注：$\text{LN}$ 表示 Layer Normalization，$\text{MSA}$ 表示 Multi-head Self-Attention。*
+其中：
+* $E \in \mathbb{R}^{(P^2 \cdot C) \times D}$ 是线性映射层的权重矩阵。
+* $E_{\text{pos}} \in \mathbb{R}^{(N+1) \times D}$ 是可学习的位置编码。
 
-3. **最终分类输出**：
-   $$y = \text{LN}(z_L^0)$$
-   只取 $z_L$ 的第 0 个位置（即 `[CLS]` 对应的输出）送入 MLP Head 进行最终预测。
+### 阶梯二：Transformer Encoder 堆叠循环
+对于层数 $l = 1, \dots, L$，每一层的计算流程为：
+$$z_l' = \text{MSA}(\text{LN}(z_{l-1})) + z_{l-1}$$
+$$z_l = \text{MLP}(\text{LN}(z_l')) + z_l'$$
 
----
+> 📌 **注**：$\text{LN}$ 表示层归一化（Layer Normalization），$\text{MSA}$ 表示多头自注意力机制（Multi-head Self-Attention）。
 
+### 阶梯三：最终分类输出
+$$y = \text{LN}(z_L^0)$$
+
+只取最终输出 $z_L$ 的第 $0$ 个位置（即 `[CLS]` 对应的输出特征），送入 MLP Head 进行最终的类别预测。
 ## 💻 PyTorch 核心代码实现 (Core Implementation)
 
 以下是使用 PyTorch 实现 **Patch Embedding** 的核心片段，利用 `nn.Conv2d` 可以非常优雅地同时实现图像切块和线性映射：
