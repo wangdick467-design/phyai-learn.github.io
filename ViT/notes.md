@@ -1,7 +1,23 @@
 # 👁️ Vision Transformer (ViT) 学习与复现笔记
 
-近年来，Transformer 架构成功从 NLP 领域跨界到计算机视觉（CV），而 **ViT (Vision Transformer)** 则是这一变革的里程碑之作。本篇笔记记录了 ViT 的核心设计思想、数学表达以及 PyTorch 核心代码实现。
+2021 年Transformer 架构成功从 NLP 领域跨界到计算机视觉（CV），而 **ViT (Vision Transformer)** 则是这一变革的里程碑之作。本篇笔记记录了 ViT 的核心设计思想、数学表达以及 PyTorch 核心代码实现。
+---
+## 🔗 论文基本信息与资源
+* **论文题目**: An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale
+* **发表会议**: ICLR 2021 (Oral)
+* **论文原址**: [arXiv:2010.11929](https://arxiv.org/abs/2010.11929)
+* **官方代码**: [google-research/vision_transformer](https://github.com/google-research/vision_transformer)
 
+### 📄 BibTeX 学术引用格式
+```bibtex
+@inproceedings{
+  dosovitskiy2021an,
+  title={An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale},
+  author={Alexey Dosovitskiy and Lucas Beyer and Alexander Kolesnikov and Dirk Weissenborn and Xiaohua Zhai and Thomas Unterthiner and Mostafa Dehghani and Matthias Minderer and Georg Heigold and Sylvain Gelly and Jakob Uszkoreit and Neil Houlsby},
+  booktitle={International Conference on Learning Representations},
+  year={2021},
+  url={[https://openreview.net/forum?id=YicbFdNTTy](https://openreview.net/forum?id=YicbFdNTTy)}
+}
 ---
 
 ## 💡 核心思想：Img as 16x16 Words
