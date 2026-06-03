@@ -46,12 +46,12 @@ $$z_0 = [x_{\text{class}}; \, x_p^1 E; \, x_p^2 E; \, \dots; \, x_p^N E] + E_{\t
 $$z_l' = \text{MSA}(\text{LN}(z_{l-1})) + z_{l-1}$$
 $$z_l = \text{MLP}(\text{LN}(z_l')) + z_l'$$
 
-> 📌 **注**：$\text{LN}$ 表示层归一化（Layer Normalization），$\text{MSA}$ 表示多头自注意力机制（Multi-head Self-Attention）。
+> 📌 **注**：$$\text{LN}$$ 表示层归一化（Layer Normalization），$$\text{MSA}$$ 表示多头自注意力机制（Multi-head Self-Attention）。
 
 ### 阶梯三：最终分类输出
 $$y = \text{LN}(z_L^0)$$
 
-只取最终输出 $z_L$ 的第 $0$ 个位置（即 `[CLS]` 对应的输出特征），送入 MLP Head 进行最终的类别预测。
+只取最终输出 $$z_L$$ 的第 0个位置（即 `[CLS]` 对应的输出特征），送入 MLP Head 进行最终的类别预测。
 ## 💻 PyTorch 核心代码实现 (Core Implementation)
 
 以下是使用 PyTorch 实现 **Patch Embedding** 的核心片段，利用 `nn.Conv2d` 可以非常优雅地同时实现图像切块和线性映射：
