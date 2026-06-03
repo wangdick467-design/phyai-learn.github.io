@@ -1,7 +1,7 @@
-# 参考：https://developer.baidu.com/article/detail.html?id=5596066
-# 源码https://github.com/google-research/vision_transformer#running-on-cloud
+#参考：https://developer.baidu.com/article/detail.html?id=5596066
+#源码https://github.com/google-research/vision_transformer#running-on-cloud
 
-#1. 环境配置
+#环境配置
 
 
 ```bash
