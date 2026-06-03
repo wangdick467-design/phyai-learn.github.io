@@ -46,7 +46,7 @@ $$z_0 = [x_{\text{class}}; \, x_p^1 E; \, x_p^2 E; \, \dots; \, x_p^N E] + E_{\t
 $$z_l' = \text{MSA}(\text{LN}(z_{l-1})) + z_{l-1}$$
 $$z_l = \text{MLP}(\text{LN}(z_l')) + z_l'$$
 
-> 📌 **注**：$\text{LN}$ 表示层归一化（Layer Normalization），$\text{MSA}$ 表示多头自注意力机制（Multi-head Self-Attention）。
+> 📌 **注**：LN表示层归一化（Layer Normalization），MSA 表示多头自注意力机制（Multi-head Self-Attention）。
 
 ### 阶梯三：最终分类输出
 $$y = \text{LN}(z_L^0)$$
