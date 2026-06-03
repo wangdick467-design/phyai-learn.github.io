@@ -8,16 +8,7 @@
 * **论文原址**: [arXiv:2010.11929](https://arxiv.org/abs/2010.11929)
 * **官方代码**: [google-research/vision_transformer](https://github.com/google-research/vision_transformer)
 
-### 📄 BibTeX 学术引用格式
-```bibtex
-@inproceedings{
-  dosovitskiy2021an,
-  title={An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale},
-  author={Alexey Dosovitskiy and Lucas Beyer and Alexander Kolesnikov and Dirk Weissenborn and Xiaohua Zhai and Thomas Unterthiner and Mostafa Dehghani and Matthias Minderer and Georg Heigold and Sylvain Gelly and Jakob Uszkoreit and Neil Houlsby},
-  booktitle={International Conference on Learning Representations},
-  year={2021},
-  url={[https://openreview.net/forum?id=YicbFdNTTy](https://openreview.net/forum?id=YicbFdNTTy)}
-}
+
 ---
 
 ## 💡 核心思想：Img as 16x16 Words
