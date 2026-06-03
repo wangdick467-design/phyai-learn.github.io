@@ -61,7 +61,7 @@ $$y = \text{LN}(z_L^0)$$
 2. **Transformer Encoder (多层编码器堆叠)**
 3. **MLP Head (分类输出层)**
 
-> 📌 **架构图占位**：*(在此处可以插入原论文的 Pipeline 架构图)*
+> 📌 **架构图占位**：
 <p align="center">
   <img src="./vit.png" width="600px" alt="ViT 架构图">
 </p>
@@ -70,9 +70,7 @@ $$y = \text{LN}(z_L^0)$$
 
 ## 🛠️ 第一部分：Embedding 层结构详解 (维度转换的艺术)
 
-标准的 Transformer 模块专门为 NLP 设计，要求输入必须是二维矩阵序列：
-$$\text{Shape: } [N, D] \quad (\text{即 } [\text{num\_token}, \, \text{token\_dim}])$$
-以主流的 **ViT-B/16** 为例，每个 token 向量的长度硬性规定为 $D = 768$。
+标准的 Transformer 模块专门为 NLP 设计，要求输入必须是二维矩阵序列[num,dim]，以主流的 **ViT-B/16** 为例，每个 token 向量的长度硬性规定为 $D = 768$。
 
 然而，图像数据的原生格式为三维矩阵：$[H, W, C]$。为了打通图像到序列的壁垒，Embedding 层执行了以下精妙的变换：
 
@@ -98,22 +96,49 @@ $$\text{Shape: } [N, D] \quad (\text{即 } [\text{num\_token}, \, \text{token\_d
 
 ## 🔄 第二部分：Transformer Encoder 详解
 
-Transformer Encoder 的本质是 **Encoder Block 的 $L$ 次重复堆叠**（在 ViT-B 中 $L=12$）。单个 Block 内部由以下四个硬核组件闭环构成：
+Transformer Encoder 的核心任务是**对输入的长序列特征进行深度融合与特征提取**。在实际架构中，它的本质就是 **Encoder Block 的 $L$ 次重复堆叠**（例如在标准的 ViT-B/16 中，层数 $L = 12$）。
+
+下图详细拆解了单个 Encoder Block 内部的数据流向与残差闭环：
 
 
 
-```text
-输入 [197, 768] 
-   │
-   ├───> [ Layer Norm ] ──> [ Multi-Head Attention ] ──> [ Dropout/DropPath ] ──(+)──> 残差连接 1
-   │                                                                            ▲
-   └────────────────────────────────────────────────────────────────────────────┘
-   │
-   ├───> [ Layer Norm ] ──> [ MLP Block (节点翻4倍->缩回) ] ──> [ Dropout ] ───(+)──> 残差连接 2
-   │                                                                            ▲
-   └────────────────────────────────────────────────────────────────────────────┘
-                                                                                │
-                                                                       输出 [197, 768]
+### 🧱 Encoder Block 的四大核心组件
+
+每一个独立的编码器模块（Block）内部，都严格由以下四个硬核组件按部就班地组合而成：
+
+1. **前置层归一化 (Pre-Layer Norm, LN)**
+   * **机制**：与传统 ResNet 采用的 Batch Norm（针对 Batch 维度）不同，ViT 采用的是针对每个 token 向量维度的 Layer Norm。
+   * **特色**：原论文采用了 **Pre-LN** 结构，即在数据进入 Multi-Head Attention 和 MLP 块*之前*就进行归一化。相比 Post-LN（在模块后归一化），Pre-LN 使得深层网络的梯度传递更加稳定，模型更容易收敛。
+
+2. **多头自注意力机制 (Multi-Head Self-Attention, MSA)**
+   * **机制**：这是 Transformer 的灵魂所在。通过计算 Query、Key 和 Value 矩阵，让 197 个 tokens 之间能够进行全域的（Global）双向信息交互。
+   * **AI 洞察**：模型正是通过这一层，在分类时学会了如何将注意力分配到图像的不同空间区域（例如在图像美学感知任务中，模型会在这里自发关注到色彩对比最强烈、或符合黄金分割线的 Patch 序列）。
+
+3. **随机深度防过拟合 (Dropout / DropPath)**
+   * **策略**：原论文的代码在常规全连接后使用了 `Dropout` 层。
+   * **工业界优化**：但在后来主流的 PyTorch 工业级复现（如著名的 `timm` 库以及 Ross Wightman 的实现）中，普遍将主干路径的 Dropout 替换为了 **DropPath（随机深度，Stochastic Depth）**。DropPath 会在训练时随机将整个 Block 的残差分支关闭，这在防止大型 ViT 模型过拟合时表现得极其优秀。
+
+4. **多层感知机模块 (MLP Block)**
+   * **结构**：由 `Linear (全连接) -> GELU 激活函数 -> Dropout -> Linear (全连接)` 组成。
+   * **维度流向**（以 ViT-B/16 为例）：
+     * **第一层（升维）**：全连接层将通道数狠翻 4 倍，将特征从 $[197, 768]$ 暴力投影到 $[197, 3072]$。
+     * **激活层**：通过非线性能力极强的 **GELU 激活函数**。
+     * **第二层（降维）**：全连接层再将特征完美还原回原节点个数：$[197, 3072] \rightarrow [197, 768]$。
+
+---
+
+### 📊 附：主流 ViT 模型的 Encoder 配置参数
+
+为了方便你在后续复现代码或进行调参（Hyperparameter Sweep）时快速查阅，以下是原论文中三种主流 ViT 规格在 Encoder 部分的官方标准参数对比：
+
+| 模型规格 (Model) | 编码器层数 $L$ (Layers) | 隐层维度 $D$ (Hidden size) | MLP 升维通道 (MLP size) | 注意力头数 (Heads) | 总参数量 (Params) |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **ViT-Base (ViT-B)** | 12 | 768 | 3072 | 12 | 86M |
+| **ViT-Large (ViT-L)** | 24 | 1024 | 4096 | 16 | 307M |
+| **ViT-Huge (ViT-H)** | 32 | 1280 | 5120 | 16 | 632M |
+
+> 💡 **数据流动小结**：无论经历多少次 MLP 升降维或 Attention 交互，数据通过单个 Encoder Block 前后的 **Shape 始终保持绝对一致**（如 $[197, 768]$），这种模块化设计为构建极深的 AI 网络提供了极高的工程便利性。
+
 
 
 ## 🎯 第三部分：MLP Head 详解与下游分类
