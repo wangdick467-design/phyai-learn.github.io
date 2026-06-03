@@ -62,7 +62,9 @@ $$y = \text{LN}(z_L^0)$$
 3. **MLP Head (分类输出层)**
 
 > 📌 **架构图占位**：*(在此处可以插入原论文的 Pipeline 架构图)*
-> `![ViT Architecture]![ViT 架构图](./vit.png)`
+<p align="center">
+  <img src="./vit.png" width="600px" alt="ViT 架构图">
+</p>
 
 ---
 
