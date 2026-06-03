@@ -11,7 +11,7 @@
 ### 1. 图像分块 (Patch Embedding)
 将输入图像 $X \in \mathbb{R}^{H \times W \times C}$ 均匀切分成不重叠的图像块 $X_p \in \mathbb{R}^{N \times (P^2 \cdot C)}$。
 
-其中 $(P,P)$ 是每个 Patch 的分辨率，而 Patch 的总个数（即序列长度）$N$ 的计算公式为：
+其中 $(P,P)$ 是每个 Patch 的分辨率，而 Patch 的总个数（即序列长度）N 的计算公式为：
 $$N = \frac{H \cdot W}{P^2}$$
 
 ### 2. 线性映射与位置编码
