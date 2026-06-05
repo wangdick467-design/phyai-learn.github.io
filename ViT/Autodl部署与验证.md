@@ -12,7 +12,7 @@ cd /root/autodl-tmp
 conda create -p /root/autodl-tmp/conda/envs/vit_env python=3.10 -y
 
 # 激活环境
-conda activate /root/autodl-tmp/conda/envs/vit_env
+conda activate vit_env
 
 # 克隆 ViT 官方仓库
 git clone https://github.com/google-research/vision_transformer.git
