@@ -46,10 +46,10 @@ wget -c https://storage.googleapis.com/vit_models/imagenet21k/ViT-B_16.npz \
 
   # 创建日志输出目录
 mkdir -p /root/autodl-tmp/vit_logs
-
+数据集手动上传，写一个脚本把二进制转换到'/root/autodl-tmp/cifar10_standard'
 # 启动微调（使用本地预训练权重）
 python -m vit_jax.main \
-  --workdir=/root/autodl-tmp/vit_logs/vit-$(date +%s) \
-  --config=$(pwd)/vit_jax/configs/vit.py:b16,cifar10 \
-  --config.pretrained_path='/root/autodl-tmp/vit_models/ViT-B_16.npz'
-  
+   --workdir=/root/autodl-tmp/vit_logs/vit-$(date +%s) \
+   --config=$(pwd)/vit_jax/configs/vit.py:b16,cifar10 \
+   --config.pretrained_dir='/root/autodl-tmp/vit_models/ViT-B_16.npz' \
+   --config.dataset='/root/autodl-tmp/cifar10_standard'
