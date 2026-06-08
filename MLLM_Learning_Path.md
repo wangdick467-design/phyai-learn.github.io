@@ -74,7 +74,7 @@
 * **LLaVA 系列 (Large Language and Vision Assistant)**：
     * **LLaVA-1.5**：简单的 MLP Projector + 高分辨率图块切分（AnyRes 技术），开创了开源 MLLM 的基准。
     * **LLaVA-NeXT**：动态高分辨率支持，大幅增强了文档理解与细节捕获能力。
-* **Qwen-VL / Qwen2-VL 系列**：
+* **Qwen-VL  系列**：
     * 引入 **Naive Dynamic Resolution**（动态分辨率解析），支持任意分辨率的图像输入。
     * 引入 **MRA (Multimodal Rotary Position Embedding)**，为视觉表征引入准确的 2D/3D 空间与时间位置感知。
 * **CogVLM 系列**：
