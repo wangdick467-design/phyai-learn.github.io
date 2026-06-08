@@ -1,7 +1,7 @@
 # phyai-learn.github.io
 Share ai learning💡
 ---
-## 主要是多模态大模型的学习笔记和复现。物理学本，top2电子学博士想试试Ai时代0基础自学Ai。
+## 展示自己多模态大模型学习的demo。物理学本，top2电子学博士Ai时代0基础自学Ai。
 
 🗓️# 多模态大模型学习路线
 
