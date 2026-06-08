@@ -5,12 +5,12 @@ Share ai learning💡
 
 🗓️ 详细学习计划
 阶段一：基础
--编程：Python + NumPy/Pandas，能处理图像、文本、音频数据
--数学：线性代数（向量、矩阵）、概率统计（分布、方差）、期望、方差、贝叶斯定理，微积分: 梯度、导数、链式法则
--深度学习框架：PyTorch（推荐）或 TensorFlow
--单模态基础
+编程：Python + NumPy/Pandas，能处理图像、文本、音频数据
+数学：线性代数（向量、矩阵）、概率统计（分布、方差）、期望、方差、贝叶斯定理，微积分: 梯度、导数、链式法则
+深度学习框架：PyTorch（推荐）或 TensorFlow
+单模态基础
 视觉: CNN原理、ResNet、图像分类/检测 (参考 Stanford CS231n)
--文本: Transformer架构、自注意力机制 (参考 Stanford CS224N)
+文本: Transformer架构、自注意力机制 (参考 Stanford CS224N)
 
 阶段二：多模态大模型部署demo
 1. 经典模型
