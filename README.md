@@ -35,9 +35,9 @@ Share ai learning💡
 
 ---
 
-## 阶段二：多模态大模型部署与Demo
+## 阶段二：经典模型学习
 
-### 1. 经典模型
+### 
 
 | 模型 | 全称 | 核心思想 |
 |------|------|----------|
@@ -46,7 +46,7 @@ Share ai learning💡
 | **BLIP** | Bootstrapping Language-Image Pre-training | 引导式语言图像预训练，提升图文理解 |
 | **LXMERT** | Learning Cross-Modal Encoder Representations from Transformers | 学习跨模态编码器表示 |
 
-### 2. 大型多模态语言模型
+## 阶段三：大型多模态语言模型部署
 
 #### LLaVA
 - **L**arge **L**anguage-and-**V**ision **A**ssistant
