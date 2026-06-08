@@ -46,11 +46,16 @@ Share ai learning💡
 | **BLIP** | Bootstrapping Language-Image Pre-training | 引导式语言图像预训练，提升图文理解 |
 | **LXMERT** | Learning Cross-Modal Encoder Representations from Transformers | 学习跨模态编码器表示 |
 
-## 阶段三：大型多模态语言模型部署
+## 阶段三：大型多模态语言模型部署-实战
 
 #### LLaVA
 - **L**arge **L**anguage-and-**V**ision **A**ssistant
 - 视觉指令调优 (Visual Instruction Tuning)
+#### GLM-4.1V-9B-Thinking
+#### QwenVL系列
+
+
+## 阶段四 VLA和世界模型
 
 #### 视觉编码器与大语言模型结合方法
 - 视觉编码器提取图像特征 → 投影层(Projector)对齐维度 → 大语言模型生成文本
