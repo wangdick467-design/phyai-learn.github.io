@@ -213,28 +213,80 @@
 
 ---
 
-## 七、使用指南
+## 七、框架总结
 
-### 7.1 快速开始
+## 1. 
 
-```python
-# 使用transformers库
-from transformers import AutoModelForCausalLM, AutoProcessor
+- **早期（Qwen-1 / Qwen1.5）**：经典 Transformer + 优化（SwiGLU、RoPE、RMSNorm）。
+- **Qwen2 / Qwen2.5**：引入 GQA、长上下文增强（YARN/DCA）、大规模数据（7T→18T tokens）、MoE 变体。
+- **Qwen3 / Qwen3.5**：混合注意力（Gated DeltaNet + Full Attention）、高稀疏 MoE、原生多模态、混合架构追求极致效率。
 
-model = AutoModelForCausalLM.from_pretrained(
-    "Qwen/Qwen2.5-VL-8B-Instruct",
-    torch_dtype="auto",
-    device_map="auto"
-)
-processor = AutoProcessor.from_pretrained("Qwen/Qwen2.5-VL-8B-Instruct")
+所有系列均采用 **Pre-Norm + RMSNorm + SwiGLU**，位置编码以 **RoPE** 为主，训练范式为大规模预训练 + SFT + RLHF/DPO/GRPO 等对齐。
 
-# 对话示例
-messages = [
-    {"role": "user", "content": [
-        {"type": "image", "image": "path/to/image.jpg"},
-        {"type": "text", "text": "这张图片里有什么？"}
-    ]}
-]
+## 2. Qwen-1（初始版本，2023）
+- **架构**：标准 Decoder-only Transformer，继承 Llama-like 框架。
+  - Pre-Norm + RMSNorm。
+  - SwiGLU 激活。
+  - RoPE 位置编码。
+  - 多头注意力（MHA），部分引入 QKV bias。
+- **关键特点**：基础 tokenizer（BBPE，大词表支持中英），支持多模态扩展（如 Qwen-VL：ViT + LLM + MLP 连接器）。
+- **变体**：Qwen-VL（视觉）、Qwen-Audio 等，模块化多模态融合。
 
+## 3. Qwen1.5（2024 早期改进版）
+- **架构**：与 Qwen-1 高度相似，仍为经典 Transformer。
+  - SwiGLU、RoPE、QKV bias、RMSNorm（Pre-Norm）。
+  - **引入 GQA**（Grouped-Query Attention，尤其 32B+ 模型），提升推理效率。
+  - 支持 32K 上下文（稳定）。
+  - **MoE 变体**（Qwen1.5-MoE-A2.7B）：细粒度专家（64 experts）、共享专家 + 路由专家、上采样（upcycling）初始化。激活参数少（~1/3），性能接近 7B dense 模型。
+- **改进**：多语言增强、系统提示支持。
+
+## 4. Qwen2（2024）
+- **架构**：Transformer decoder-only，重大优化。
+  - **GQA**（全系列）。
+  - SwiGLU + RoPE + QKV bias + RMSNorm (Pre-Norm)。
+  - **Dual Chunk Attention (DCA) + YARN**：支持更长上下文。
+  - **MoE 变体**（57B-A14B）：细粒度专家、共享专家路由。
+- **配置示例**（Dense）：0.5B/1.5B/7B/72B 等规模。
+- **训练**：7T+ 高质量 tokens，强调代码/数学/多语言数据。
+
+## 5. Qwen2.5（2024-2025，当前主流开放系列）
+- **架构**：延续 Qwen2 Transformer 基础，进一步精炼。
+  - GQA、SwiGLU、RoPE、QKV bias、RMSNorm。
+  - 上下文：128K（部分 1M via 扩展）。
+  - **MoE**（API 版如 Turbo/Plus）：替换 FFN 为 MoE 层，细粒度专家 + 共享专家。
+  - **多模态扩展**（Qwen2.5-VL / Omni）：
+    - ViT（动态分辨率、2D-RoPE、Window Attention）。
+    - Thinker-Talker 架构。
+    - TMRoPE（时间对齐多模态 RoPE）。
+- **数据**：18T tokens 预训练，1M+ SFT 示例，多阶段 RL。
+- **规模**：Dense（0.5B~72B）+ 专用（Coder、Math）。
+
+## 6. Qwen3 / Qwen3.5（2025+，最新混合架构）
+- **架构**：重大突破，**混合注意力 + 高稀疏 MoE**。
+  - **核心创新**：**Gated DeltaNet**（线性注意力，基于 Delta Rule + Gated 机制） + 标准 Full/Gated Attention（交替使用）。
+    - 大多数层用 Gated DeltaNet（近线性复杂度，长上下文高效）。
+    - 间隔层保留 Full Attention。
+  - **MoE**：极高稀疏度（如 235B-A22B、30B-A3B），Top-K 路由 + 共享专家。
+  - SwiGLU、RMSNorm 等保留。
+  - **多模态**（Qwen3-VL 等）：DeepStack、Interleaved-MRoPE、动态分辨率。
+- **上下文**：原生支持 128K~1M+。
+- **规模**：Dense（0.6B~32B）+ MoE（30B-A3B ~ 235B-A22B+）。
+
+## 7. 跨系列共同/演进特点
+- **Tokenizer**：统一 BBPE，大词表（~151k），支持中英/代码/多语言。
+- **训练范式**：Scaling Laws + 高质量数据混合 + SFT + RLHF（DPO/GRPO）。
+- **效率优化**：GQA、MoE 稀疏、混合注意力、量化支持。
+- **多模态**：从模块化到原生融合。
+- **哲学**：从“规模优先”到“效率 + 能力平衡”，强调开源、可部署。
+
+## 8. 总结对比表
+
+| 系列       | 核心架构                          | 注意力/效率创新                  | MoE 支持          | 上下文       | 主要亮点                  |
+|------------|-----------------------------------|----------------------------------|-------------------|--------------|---------------------------|
+| Qwen-1    | Transformer (Llama-like)         | MHA + RoPE                      | 有限             | 基础        | 基础多模态扩展           |
+| Qwen1.5   | Transformer                      | GQA + SwiGLU                    | 是（细粒度）     | 32K         | 多语言、MoE 上采样       |
+| Qwen2     | Transformer                      | GQA + DCA/YARN                  | 是               | 长上下文    | 性能跃升、多语言         |
+| Qwen2.5   | Transformer                      | GQA + 动态多模态 RoPE           | 是（API）        | 128K/1M     | 大数据、专用模型         |
+| Qwen3/3.5 | Hybrid (Gated DeltaNet + Full)   | 混合线性注意力 + MoE            | 高稀疏 MoE       | 128K~1M+    | 极致效率、原生多模态     |
 
 
