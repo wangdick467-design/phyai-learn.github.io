@@ -54,8 +54,19 @@ Share ai learning💡
 #### GLM-4.1V-9B-Thinking
 #### QwenVL系列
 
-
 ## 阶段四 VLA和世界模型
+- VLA (左脑 - 决策与交互)： 传统 VLM（如 GPT-4V）只能看图说话。VLA 在此基础上加入了 Action（动作输出）。它把机械臂的控制指令（如七自由度关节角、末端位移）直接作为文本或 Token 预测出来。核心逻辑：把控制问题转化为序列生成问题。
+
+- World Models (右脑 - 想象与预测)： 让智能体在“脑海”中模拟世界。输入当前状态和动作，预测未来的状态和奖励。核心逻辑：用自监督学习构建一个物理世界的虚拟沙盒，让 AI 在沙盒里低成本试错。
+#### Dreamer 系列 (V1-V3) (Hafner et al.):
+#### OpenVLA (2024)
+
+
+## 阶段五 Ai Agent
+- https://www.runoob.com/ai-agent/ai-agent-tutorial.html
+
+
+
 
 #### 视觉编码器与大语言模型结合方法
 - 视觉编码器提取图像特征 → 投影层(Projector)对齐维度 → 大语言模型生成文本
