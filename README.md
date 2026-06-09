@@ -5,7 +5,7 @@ Share ai learning💡
 
 🗓️# 多模态大模型学习路线
 
-## 阶段一：基础
+## Part1：基础
 
 ### 1. 底层知识
 
@@ -35,7 +35,7 @@ Share ai learning💡
 
 ---
 
-## 阶段二：经典模型学习
+## Part2：经典模型学习
 
 ### 
 
@@ -46,7 +46,7 @@ Share ai learning💡
 | **BLIP** | Bootstrapping Language-Image Pre-training | 引导式语言图像预训练，提升图文理解 |
 | **LXMERT** | Learning Cross-Modal Encoder Representations from Transformers | 学习跨模态编码器表示 |
 
-## 阶段三：大型多模态语言模型部署-实战
+## Part3：大型多模态语言模型部署-实战
 
 #### LLaVA
 - **L**arge **L**anguage-and-**V**ision **A**ssistant
@@ -54,7 +54,7 @@ Share ai learning💡
 #### GLM-4.1V-9B-Thinking
 #### QwenVL系列
 
-## 阶段四 VLA和世界模型
+## Part4： VLA和世界模型
 - VLA (左脑 - 决策与交互)： 传统 VLM（如 GPT-4V）只能看图说话。VLA 在此基础上加入了 Action（动作输出）。它把机械臂的控制指令（如七自由度关节角、末端位移）直接作为文本或 Token 预测出来。核心逻辑：把控制问题转化为序列生成问题。
 
 - World Models (右脑 - 想象与预测)： 让智能体在“脑海”中模拟世界。输入当前状态和动作，预测未来的状态和奖励。核心逻辑：用自监督学习构建一个物理世界的虚拟沙盒，让 AI 在沙盒里低成本试错。
@@ -62,7 +62,7 @@ Share ai learning💡
 #### OpenVLA (2024)
 
 
-## 阶段五 Ai Agent
+## Part5 Ai Agent
 - https://www.runoob.com/ai-agent/ai-agent-tutorial.html
 
 
