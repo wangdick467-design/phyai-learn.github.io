@@ -1,4 +1,4 @@
-# Qwen-VL 系列全面笔记
+# Qwen-VL 系列概述
 
 > 阿里通义实验室推出的多模态大模型系列，从基础视觉理解到旗舰级空间推理的全方位技术演进
 > 部署参考：https://www.bilibili.com/video/BV1djF2emEcS?spm_id_from=333.788.videopod.sections&vd_source=bd38266a7bcac2690321bce7d1e25954
