@@ -6,8 +6,8 @@
 网址：https://arxiv.org/pdf/1706.03762
 - **主要动机**: 解决 RNN 的串行计算瓶颈和长距离依赖问题
 - **核心创新**: 完全基于 **自注意力机制**，摒弃循环与卷积结构
-吴恩达：https://www.bilibili.com/video/BV1JnV36vEeB/?spm_id_from=333.337.search-card.all.click
-可视化：https://www.bilibili.com/video/BV13z421U7cs/?spm_id_from=333.337.search-card.all.click
+> 吴恩达：https://www.bilibili.com/video/BV1JnV36vEeB/?spm_id_from=333.337.search-card.all.click
+> 可视化：https://www.bilibili.com/video/BV13z421U7cs/?spm_id_from=333.337.search-card.all.click
 ---
 
 ## 2. 整体架构
