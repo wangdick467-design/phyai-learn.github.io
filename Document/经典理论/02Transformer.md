@@ -426,7 +426,7 @@ Feed Forward
 ```
 
 ---
-<img width="307" height="303" alt="image" src="https://github.com/user-attachments/assets/c3a5dc20-61f6-4974-b1ba-b0e1a03d9412" />
+<img width="707" height="303" alt="image" src="https://github.com/user-attachments/assets/c3a5dc20-61f6-4974-b1ba-b0e1a03d9412" />
 
 ## Masked Attention
 
