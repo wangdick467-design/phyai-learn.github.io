@@ -70,13 +70,14 @@ Add & Norm
 Output
 ```
 <img width="626" height="331" alt="image" src="https://github.com/user-attachments/assets/abad2a14-f5c5-44ce-b41b-5e8afe0b8f55" />
-包含两大模块：
+
+#包含两大模块：
 
 1. Multi-Head Self Attention
 2. Feed Forward Network
 
 多头注意里用于计算输入的注意力权重生成一个带有编码信息的输出向量 指示序列中每个词如何关注其他词
-
+将多头注意力输出向量加到原始输入叫残差连接 残差连接的输出经过层归一化 残差连接有助于梯度直接流过网络
 ---
 
 # 4. 输入表示（Input Embedding）
@@ -425,6 +426,7 @@ Feed Forward
 ```
 
 ---
+<img width="307" height="303" alt="image" src="https://github.com/user-attachments/assets/c3a5dc20-61f6-4974-b1ba-b0e1a03d9412" />
 
 ## Masked Attention
 
