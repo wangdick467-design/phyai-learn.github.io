@@ -1,4 +1,4 @@
-# Transformer 笔记
+<img width="1226" height="731" alt="image" src="https://github.com/user-attachments/assets/abad2a14-f5c5-44ce-b41b-5e8afe0b8f55" /># Transformer 笔记
 
 ## 1. 核心背景
 
@@ -74,6 +74,8 @@ Output
 
 1. Multi-Head Self Attention
 2. Feed Forward Network
+
+多头注意里用于计算输入的注意力权重生成一个带有编码信息的输出向量 指示序列中每个词如何关注其他词
 
 ---
 
