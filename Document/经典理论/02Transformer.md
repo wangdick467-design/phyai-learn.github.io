@@ -9,6 +9,7 @@
 > 吴恩达：https://www.bilibili.com/video/BV1JnV36vEeB/?spm_id_from=333.337.search-card.all.click
 > 可视化：https://www.bilibili.com/video/BV13z421U7cs/?spm_id_from=333.337.search-card.all.click
 ---
+https://www.bilibili.com/video/BV1ih4y1J7rx?spm_id_from=333.788.recommend_more_video.1&trackid=web_related_0.router-related-2589621-z4htq.1781257732974.238&vd_source=bd38266a7bcac2690321bce7d1e25954
 
 Transformer 是由 Vaswani 等人在 2017 年提出的深度学习模型，其论文为《Attention Is All You Need》。
 
