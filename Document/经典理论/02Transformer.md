@@ -1,4 +1,4 @@
-<img width="1226" height="731" alt="image" src="https://github.com/user-attachments/assets/abad2a14-f5c5-44ce-b41b-5e8afe0b8f55" /># Transformer 笔记
+# Transformer 笔记
 
 ## 1. 核心背景
 
@@ -69,7 +69,7 @@ Add & Norm
   ▼
 Output
 ```
-
+<img width="626" height="331" alt="image" src="https://github.com/user-attachments/assets/abad2a14-f5c5-44ce-b41b-5e8afe0b8f55" />
 包含两大模块：
 
 1. Multi-Head Self Attention
