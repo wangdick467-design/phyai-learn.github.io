@@ -54,10 +54,11 @@ Image Encoder  Text Encoder
           Similarity
 ```
 
-无需固定类别。
-<img width="223" height="146" alt="image" src="https://github.com/user-attachments/assets/ea6664ed-cc33-4f64-9c20-35bb8bdedb06" />
+
+<img width="623" height="346" alt="image" src="https://github.com/user-attachments/assets/ea6664ed-cc33-4f64-9c20-35bb8bdedb06" />
 
 ---
+无需固定类别。
 
 # 2. CLIP解决了什么问题
 
