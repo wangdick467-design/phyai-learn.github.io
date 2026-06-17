@@ -3,7 +3,9 @@
 > 作者：OpenAI  
 > 论文：Learning Transferable Visual Models From Natural Language Supervision（2021）  
 > 模型名称：CLIP（Contrastive Language-Image Pretraining）
-
+> https://github.com/openai/CLIP
+> 论文连接https://arxiv.org/abs/2103.00020
+> https://www.bilibili.com/video/BV1SL4y1s7LQ?spm_id_from=333.788.videopod.sections&vd_source=9629687338410a5ccaa5e1a595d0f17d
 ---
 
 # 1. CLIP简介
