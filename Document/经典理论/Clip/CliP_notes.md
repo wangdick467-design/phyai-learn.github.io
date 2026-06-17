@@ -55,6 +55,7 @@ Image Encoder  Text Encoder
 ```
 
 无需固定类别。
+<img width="223" height="146" alt="image" src="https://github.com/user-attachments/assets/ea6664ed-cc33-4f64-9c20-35bb8bdedb06" />
 
 ---
 
